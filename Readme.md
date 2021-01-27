@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
-* Студент: [Аретм Комаров](https://up.htmlacademy.ru/javascript/22/user/1422707).
-* Наставник: `Неизвестно`.
+* Студент: [Артем Комаров](https://up.htmlacademy.ru/javascript/22/user/1422707).
+* Наставник: [Владимир Коршунов](https://htmlacademy.ru/profile/bekobou).
 
 ---
 
