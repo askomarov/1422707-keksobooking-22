@@ -84,7 +84,7 @@ const getRandomArrayElement = (elemets) => {
 
 //  функция получения массива случайной длинны из массива
 const getRandomLengthArray = (elemets) => {
-  return elemets.splice(0, elemets.length - getRandomInteger(0, elemets.length));
+  return elemets.slice(0, elemets.length - getRandomInteger(0, elemets.length));
 };
 
 const mainObject = () => {
