@@ -101,7 +101,7 @@ const mainObject = () => {
     },
     offer: {
       title: getRandomArrayElement(HOUSE_TITLE),
-      address: `${ADRESS_X} , ${ADRESS_Y}`,
+      address: `${ADRESS_X}, ${ADRESS_Y}`,
       price: getRandomInteger(1,100000),
       type: getRandomArrayElement(HOUSE_TYPE),
       rooms:getRandomInteger(1,10),
@@ -113,8 +113,8 @@ const mainObject = () => {
       photos:getRandomLengthArray(HOUSE_PHOTOS),
     },
     location: {
-      x: Number(`${ADRESS_X}`),
-      y: Number(`${ADRESS_Y}`),
+      x: Number(ADRESS_X),
+      y: Number(ADRESS_Y),
     }}
   return result;
 };
