@@ -29,4 +29,18 @@ const getRandomArrayElement = (elemets) => {
 const getRandomLengthArray = (elemets) => {
   return elemets.slice(0, elemets.length - getRandomInteger(0, elemets.length));
 };
-export { getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomLengthArray };
+
+// проверка типа жилья
+const checkHouseType = function (element) {
+  if (element.offer.type === 'flat') {
+    return 'Квартира';
+  } else if (element.offer.type === 'bungalow') {
+    return 'Бунгало'
+  } else if (element.offer.type === 'palace') {
+    return 'Дворец'
+  } else if (element.offer.type === 'house') {
+    return 'Дом'
+  }
+};
+
+export { getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomLengthArray, checkHouseType };
