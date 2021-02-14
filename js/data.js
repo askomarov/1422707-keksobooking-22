@@ -35,7 +35,7 @@ const roomFeautures = [
   'conditioner',
 ];
 const houseDescriptions = [
-  'интерьев выполнен в минималистичном стиле',
+  'интерьер выполнен в минималистичном стиле',
   'можно с животными',
   'хозяин - гид проводит экскурсии',
   'ближайший магазинчик лучший в районе по морепродуктам',
@@ -52,12 +52,10 @@ const MAX_Y = 139.80;
 const LOCATION_NUM_ORDER = 5;
 
 const mainObject = () => {
-  // генерация случайного номера в название аватара
   const randomNumberImage = '0' + getRandomInteger(1, 8);
 
-  // генерируем случайные значения координат
-  const ADRESS_X = getRandomFloat(MIN_X, MAX_X, LOCATION_NUM_ORDER);
-  const ADRESS_Y = getRandomFloat(MIN_Y, MAX_Y, LOCATION_NUM_ORDER);
+  const addressX = getRandomFloat(MIN_X, MAX_X, LOCATION_NUM_ORDER);
+  const addressY = getRandomFloat(MIN_Y, MAX_Y, LOCATION_NUM_ORDER);
 
   const result = {
     author: {
@@ -65,7 +63,7 @@ const mainObject = () => {
     },
     offer: {
       title: getRandomArrayElement(houseTitles),
-      address: `${ADRESS_X}, ${ADRESS_Y}`,
+      address: `${addressX}, ${addressY}`,
       price: getRandomInteger(1, 100000),
       type: getRandomArrayElement(houseTypes),
       rooms: getRandomInteger(1, 10),
@@ -77,13 +75,13 @@ const mainObject = () => {
       photos: getRandomLengthArray(houseFotos),
     },
     location: {
-      x: Number(ADRESS_X),
-      y: Number(ADRESS_Y),
+      x: Number(addressX),
+      y: Number(addressY),
     },
   }
   return result;
 };
-//получаем готовый массив объектов
-const mainObjectList = new Array(SIMILAR_OBJECT_COUNT).fill(null).map(() => mainObject());
-// console.log(mainObjectList);
-mainObjectList;
+
+const createOffers = () => new Array(SIMILAR_OBJECT_COUNT).fill(null).map(() => mainObject());
+
+export { createOffers };
