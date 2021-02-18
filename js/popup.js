@@ -19,6 +19,9 @@ const getOfferItems = () => {
     // функция вставки доступных удобств
     const getFeaturesElemnts = function (item) {
       const popupFeatures = item.querySelector('.popup__features');
+      if (offerItem.offer.features.length === 0) {
+        popupFeatures.remove();
+      }
       offerItem.offer.features.forEach((featureItem) => {
         const featureItemTemplate = `<li class="popup__feature popup__feature--${featureItem}"></li>`;
         popupFeatures.insertAdjacentHTML('beforeend', featureItemTemplate)
@@ -27,6 +30,9 @@ const getOfferItems = () => {
     // функция вставки изображений объявления
     const getPhotosElemnts = function (item) {
       const popupPhotos = item.querySelector('.popup__photos');
+      if (offerItem.offer.photos.length === 0) {
+        popupPhotos.remove();
+      }
       offerItem.offer.photos.forEach((popupPhoto, index) => {
         const photoTemplate = `<img src="${popupPhoto}" class="popup__photo" width="45" height="40" alt="Фотография жилья ${index + 1}">`;
         popupPhotos.insertAdjacentHTML('beforeend', photoTemplate);
