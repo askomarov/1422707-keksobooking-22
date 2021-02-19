@@ -34,11 +34,14 @@ const getRandomLengthArray = (elemets) => {
 const checkHouseType = function (element) {
   if (element.offer.type === 'flat') {
     return 'Квартира';
-  } if (element.offer.type === 'bungalow') {
+  }
+  if (element.offer.type === 'bungalow') {
     return 'Бунгало';
-  } if (element.offer.type === 'palace') {
+  }
+  if (element.offer.type === 'palace') {
     return 'Дворец';
-  } if (element.offer.type === 'house') {
+  }
+  if (element.offer.type === 'house') {
     return 'Дом';
   }
 };
