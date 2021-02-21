@@ -1,2 +1,2 @@
-import './form/input-price.js';
-import './form/check-time.js';
+// import './form/input-price.js';
+// import './form/check-time.js';
