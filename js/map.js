@@ -38,7 +38,7 @@ const setNewAddress = () => {
     const addressXY = evt.target.getLatLng();
     newAddress.x = addressXY.lat.toFixed(5);
     newAddress.y = addressXY.lng.toFixed(5);
-    // console.log(newAddress)
+
     const adForm = document.querySelector('.ad-form');
     const inputAddress = adForm.querySelector('#address');
 
@@ -73,7 +73,6 @@ const createPoints = (map) => {
       // для каждой метки в попап выводим html элемент
       .bindPopup(pointElements[index]);
   });
-  // console.log(points);
 }
 
 const initMap = () => {

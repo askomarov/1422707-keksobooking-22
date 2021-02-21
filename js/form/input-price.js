@@ -11,20 +11,17 @@ import { changeAttribute } from '../util.js'
 const selectType = document.querySelector('#type');
 const inputPrice = document.querySelector('#price')
 
-// const getSelectValue = (selectElement) => {
-//   let selectedValue = '';
-//   selectedValue = selectElement.value;
-//   return selectedValue;
-// };
-
 const checkTypePrice = () => {
+  if (selectType.value === 'bungalow') {
+    return '0';
+  }
   if (selectType.value === 'flat') {
     return '1000';
-  } if (selectType.value === 'bungalow') {
-    return '0';
-  } if (selectType.value === 'palace') {
+  }
+  if (selectType.value === 'palace') {
     return '10000';
-  } if (selectType.value === 'house') {
+  }
+  if (selectType.value === 'house') {
     return '5000';
   }
 }
