@@ -11,5 +11,5 @@ env:
 extends:
   "htmlacademy/vanilla"
 
-global:
+globals:
   L: readonly
