@@ -20,6 +20,9 @@ const getRandomFloat = function (min, max, NUMBER_ORDER) {
   return (Math.random() * (max - min) + min).toFixed(NUMBER_ORDER);
 };
 
+const checkStringLength = function (string, MAX_LENGTH = 140) {
+  return string.length <= MAX_LENGTH
+}
 //  функция получения случайного элемента из массива
 const getRandomArrayElement = (elemets) => {
   return elemets[getRandomInteger(0, elemets.length - 1)];
@@ -50,4 +53,4 @@ const changeAttribute = (item, attr, value) => {
   item.setAttribute(attr, value);
 };
 
-export { getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomLengthArray, checkHouseType, changeAttribute };
+export { getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomLengthArray, checkHouseType, changeAttribute, checkStringLength };

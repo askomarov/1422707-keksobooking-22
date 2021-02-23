@@ -27,30 +27,25 @@ const simplePinIcon = L.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
-// функция получения координат главной метки при заверешении ее перемещения
-// и вставки их в инпут
-const setNewAddress = () => {
-  const newAddress = {
-    x: '',
-    y: '',
-  };
-  mainPinMarker.on('moveend', (evt) => {
+
+const adForm = document.querySelector('.ad-form');
+const inputAddress = adForm.querySelector('#address');
+
+// функция получения координат метки при заверешении ее перемещения и функция вставки данных в инпут
+const movePinPasteLocation = (pin, input) => {
+  pin.on('moveend', (evt) => {
     const addressXY = evt.target.getLatLng();
-    newAddress.x = addressXY.lat.toFixed(5);
-    newAddress.y = addressXY.lng.toFixed(5);
+    const a = addressXY.lat.toFixed(5);
+    const b = addressXY.lng.toFixed(5);
 
-    const adForm = document.querySelector('.ad-form');
-    const inputAddress = adForm.querySelector('#address');
-
-    inputAddress.value = `${newAddress.x}, ${newAddress.y}`
+    input.value = `${a}, ${b}`;
   });
 };
 
-
 // функция получения меток из массива сгенерированных объявлений
-const createPoints = (map) => {
+const createPointsOnMap = (map, array, icon) => {
   // создадим массив данных объявлений для метками
-  const points = createOffers();
+  const points = array;
   // создаим массив html элементов по шаблону для попапов
   const pointElements = createOfferElemtns(points);
 
@@ -64,14 +59,19 @@ const createPoints = (map) => {
         lng,
       },
       {
-        icon: simplePinIcon,
+        icon: icon,
       },
     );
     marker
       // каждая метка добавляется на карту
       .addTo(map)
       // для каждой метки в попап выводим html элемент
-      .bindPopup(pointElements[index]);
+      .bindPopup(
+        pointElements[index],
+        {
+          keepInView: true,
+        },
+      );
   });
 }
 
@@ -96,9 +96,8 @@ const initMap = () => {
   // добавлние главной метки на карту
   mainPinMarker.addTo(map);
 
-  createPoints(map);
-
-  setNewAddress();
+  createPointsOnMap(map, createOffers(), simplePinIcon);
+  movePinPasteLocation(mainPinMarker, inputAddress);
 };
 
 export { initMap };
