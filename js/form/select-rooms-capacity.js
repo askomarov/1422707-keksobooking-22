@@ -1,40 +1,45 @@
-const syncSelects = (selectMain, selectToSync) => {
-  const selectToSyncOptions = selectToSync.options;
-  selectToSyncOptions[2].selected = true;
-  selectMain.addEventListener('click', () => {
-    for (let index = 0; index < selectToSyncOptions.length; index++) {
+const syncSelects = (mainSelect, selectToSync) => {
+  const options = selectToSync.options;
 
-      if (selectMain.value == 1) {
-        if (selectToSyncOptions[index].value != 1) {
-          selectToSyncOptions[index].setAttribute('disabled', 'disabled');
-          selectToSyncOptions[index].selected = false;
-        } else {
-          selectToSyncOptions[2].selected = true;
-        }
-      }
-      if (selectMain.value == 2) {
-        if (selectToSyncOptions[index].value == 2 || selectToSyncOptions[index].value == 1) {
-          selectToSyncOptions[2].selected = true;
-          selectToSyncOptions[index].removeAttribute('disabled', 'disabled');
-        } else { selectToSyncOptions[index].setAttribute('disabled', 'disabled'); }
-      }
-      if (selectMain.value == 3) {
-        if (selectToSyncOptions[index].value != 0) {
-          selectToSyncOptions[2].selected = true;
-          selectToSyncOptions[index].removeAttribute('disabled', 'disabled');
-        } else { selectToSyncOptions[index].setAttribute('disabled', 'disabled'); }
-      }
-      if (selectMain.value == 100) {
-        if (selectToSyncOptions[index].value != 0) {
-          selectToSyncOptions[index].setAttribute('disabled', 'disabled');
-        } else {
-          selectToSyncOptions[index].removeAttribute('disabled', 'disabled');
-          selectToSyncOptions[index].selected = true;
-        }
+  for (let index = 0; index < options.length; index++) {
+    const option = options[index];
+    if (mainSelect.value == 1) {
+      if (option.value != 1) {
+        option.selected = false;
+        option.setAttribute('disabled', 'disabled');
+      } else {
+        option.removeAttribute('disabled', 'disabled');
+        option.selected = true;
       }
     }
-  });
+    if (mainSelect.value == 2) {
+      if (option.value == 1 || option.value == 2) {
+        option.selected = true;
+        option.removeAttribute('disabled', 'disabled');
+      } else {
+        option.setAttribute('disabled', 'disabled');
+        option.selected = false;
+      }
+    }
+    if (mainSelect.value == 3) {
+      if (option.value == 0) {
+        option.selected = false;
+        option.setAttribute('disabled', 'disabled');
+      } else {
+        option.removeAttribute('disabled', 'disabled');
+        option.selected = true;
+      }
+    }
+    if (mainSelect.value == 100) {
+      if (option.value == 0) {
+        option.selected = true;
+        option.removeAttribute('disabled', 'disabled');
+      } else {
+        option.setAttribute('disabled', 'disabled');
+        option.selected = true;
+      }
+    }
+  }
 }
 
-export { syncSelects };
-
+export { syncSelects }

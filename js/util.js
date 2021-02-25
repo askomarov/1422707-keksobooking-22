@@ -20,8 +20,8 @@ const getRandomFloat = function (min, max, NUMBER_ORDER) {
   return (Math.random() * (max - min) + min).toFixed(NUMBER_ORDER);
 };
 
-const checkStringLength = function (string, MAX_LENGTH = 140) {
-  return string.length <= MAX_LENGTH
+const checkStringLength = function (string, maxLength = 140) {
+  return string.length <= maxLength
 }
 //  функция получения случайного элемента из массива
 const getRandomArrayElement = (elemets) => {

@@ -29,7 +29,7 @@ const getPriceOfType = () => {
 const setInputMinPrice = () => {
   changeAttribute(inputPrice, 'placeholder', getPriceOfType());
   changeAttribute(inputPrice, 'min', getPriceOfType());
-  selectType.addEventListener('click', () => {
+  selectType.addEventListener('change', () => {
     changeAttribute(inputPrice, 'placeholder', getPriceOfType());
     changeAttribute(inputPrice, 'min', getPriceOfType());
   });
