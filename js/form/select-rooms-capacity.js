@@ -1,9 +1,9 @@
 const syncSelects = (mainSelect, selectToSync) => {
   const options = selectToSync.options;
 
-  for (let index = 0; index < options.length; index++) {
-    const option = options[index];
-    if (mainSelect.value == 1) {
+  if (mainSelect.value == 1) {
+    for (let index = 0; index < options.length; index++) {
+      const option = options[index];
       if (option.value != 1) {
         option.selected = false;
         option.setAttribute('disabled', 'disabled');
@@ -12,7 +12,11 @@ const syncSelects = (mainSelect, selectToSync) => {
         option.selected = true;
       }
     }
-    if (mainSelect.value == 2) {
+  }
+
+  if (mainSelect.value == 2) {
+    for (let index = 0; index < options.length; index++) {
+      const option = options[index];
       if (option.value == 1 || option.value == 2) {
         option.selected = true;
         option.removeAttribute('disabled', 'disabled');
@@ -21,7 +25,11 @@ const syncSelects = (mainSelect, selectToSync) => {
         option.selected = false;
       }
     }
-    if (mainSelect.value == 3) {
+  }
+
+  if (mainSelect.value == 3) {
+    for (let index = 0; index < options.length; index++) {
+      const option = options[index];
       if (option.value == 0) {
         option.selected = false;
         option.setAttribute('disabled', 'disabled');
@@ -30,7 +38,11 @@ const syncSelects = (mainSelect, selectToSync) => {
         option.selected = true;
       }
     }
-    if (mainSelect.value == 100) {
+  }
+
+  if (mainSelect.value == 100) {
+    for (let index = 0; index < options.length; index++) {
+      const option = options[index];
       if (option.value == 0) {
         option.selected = true;
         option.removeAttribute('disabled', 'disabled');
