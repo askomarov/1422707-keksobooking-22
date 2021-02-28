@@ -11,7 +11,7 @@ import { changeAttribute } from '../util.js'
 const selectType = document.querySelector('#type');
 const inputPrice = document.querySelector('#price')
 
-const checkTypePrice = () => {
+const getPriceOfType = () => {
   if (selectType.value === 'bungalow') {
     return '0';
   }
@@ -26,15 +26,12 @@ const checkTypePrice = () => {
   }
 }
 
-const getPriceOfType = () => {
-  let typePrice = checkTypePrice();
-  return typePrice;
-};
-
 const setInputMinPrice = () => {
+  changeAttribute(inputPrice, 'placeholder', getPriceOfType());
+  changeAttribute(inputPrice, 'min', getPriceOfType());
   selectType.addEventListener('change', () => {
-    changeAttribute(inputPrice, 'placeholder', getPriceOfType())
-    changeAttribute(inputPrice, 'min', getPriceOfType())
+    changeAttribute(inputPrice, 'placeholder', getPriceOfType());
+    changeAttribute(inputPrice, 'min', getPriceOfType());
   });
 };
 
