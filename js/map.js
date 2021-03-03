@@ -1,8 +1,12 @@
+/*global L:readonly*/
 import { makeFormsActive } from './form/active-disabled-forms.js';
-import { createOffers } from './data.js';
+import { showAlert } from './util.js';
 import { createOfferElemtns } from './popup.js';
+import { getDataFromServer } from './server.js'
+import { makeFormsDisabled } from './form/active-disabled-forms.js';
 
 const mapWrapper = document.querySelector('#map-canvas');
+const map = L.map(mapWrapper);
 
 // иконка главной метки
 const mainPinIcon = L.icon({
@@ -37,68 +41,86 @@ const movePinPasteLocation = (pin, input) => {
     const addressXY = evt.target.getLatLng();
     const a = addressXY.lat.toFixed(5);
     const b = addressXY.lng.toFixed(5);
-
     input.value = `${a}, ${b}`;
   });
 };
 
-// функция получения меток из массива сгенерированных объявлений
-const createPointsOnMap = (map, array, icon) => {
-  // создадим массив данных объявлений для метками
-  const points = array;
-  // создаим массив html элементов по шаблону для попапов
-  const pointElements = createOfferElemtns(points);
-
-  // для каждой метки получим данные, настроим попап и выведем на карту
-  points.forEach((point, index) => {
-    const lat = point.location.x;
-    const lng = point.location.y;
-    const marker = L.marker(
-      {
-        lat,
-        lng,
-      },
-      {
-        icon: icon,
-      },
-    );
-    marker
-      // каждая метка добавляется на карту
-      .addTo(map)
-      // для каждой метки в попап выводим html элемент
-      .bindPopup(
-        pointElements[index],
-        {
-          keepInView: true,
-        },
-      );
-  });
+const loadMap = async () => {
+  try {
+    map.on('load', () => {
+      // при загрузке карты - формы разблокируются
+      console.log('карта загружена');
+      makeFormsActive();
+    })
+      .setView({
+        lat: 35.6817,
+        lng: 139.75388,
+      }, 13);
+  } catch (error) { showAlert(error); makeFormsDisabled() }
 }
 
 const initMap = () => {
-  const map = L.map(mapWrapper)
-    .on('load', () => {
-      // при загрузке карты - формы разблокируются
-      makeFormsActive();
-    })
-    .setView({
-      lat: 35.6817,
-      lng: 139.75388,
-    }, 13);
-
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-
+  console.log('карта отрисована')
   // добавлние главной метки на карту
   mainPinMarker.addTo(map);
-
-  createPointsOnMap(map, createOffers(), simplePinIcon);
   movePinPasteLocation(mainPinMarker, inputAddress);
 };
 
-export { initMap };
+// функция получения меток из массива сгенерированных объявлений
+const createPointsOnMap = (map, array, icon) => {
+  console.log('начинаю делать метки на карту')
+  return new Promise(() => {
+    // создадим массив данных объявлений для метками
+    const points = array;
+    console.log(points)
+    // создаим массив html элементов по шаблону для попапов
+    const pointElements = createOfferElemtns(points);
 
+    // для каждой метки получим данные, настроим попап и выведем на карту
+    points.forEach((point, index) => {
+      console.log(`делаю метку...№${index + 1}`)
+      const lat = point.location.lat;
+      const lng = point.location.lng;
+      const marker = L.marker(
+        {
+          lat,
+          lng,
+        },
+        {
+          icon: icon,
+        },
+      );
+      marker
+        // каждая метка добавляется на карту
+        .addTo(map)
+        // для каждой метки в попап выводим html элемент
+        .bindPopup(
+          pointElements[index],
+          {
+            keepInView: true,
+          },
+        );
+    })
+    console.log('метки сделаны')
+  })
+};
+
+const initMapWhitServerData = async function () {
+  getDataFromServer
+    .then((data) => {
+      createPointsOnMap(map, data, simplePinIcon)
+    })
+    .catch((err) => {
+      showAlert('Ошибка..:' + err);
+    });
+
+  await loadMap().then(initMap);
+};
+
+export { initMapWhitServerData }

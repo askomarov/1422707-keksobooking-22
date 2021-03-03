@@ -18,6 +18,7 @@ const makeFormsDisabled = () => {
   mapFormSelects.forEach(select => {
     select.setAttribute('disabled', 'disabled')
   });
+  console.log('формы отключены')
 }
 
 const makeFormsActive = () => {
@@ -33,6 +34,7 @@ const makeFormsActive = () => {
   mapFormSelects.forEach(select => {
     select.removeAttribute('disabled')
   });
+  console.log('формы активированы')
 }
 
 export { makeFormsDisabled, makeFormsActive }
