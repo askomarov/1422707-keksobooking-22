@@ -1,17 +1,22 @@
-const submitForm = (form, url, onSuccess) => {
+
+const sendData = async (url, data) => {
+  await fetch(url,
+    {
+      method: 'POST',
+      body: data,
+    },
+  )
+}
+
+const submitForm = (form, url, onSuccess, onFail) => {
 
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    // собираем данные формы
     const formData = new FormData(evt.target);
-
-    fetch(
-      url,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    ).then(() => onSuccess());
+    sendData(url, formData)
+      .then(onSuccess)
+      .then(form.reset())
+      .catch(onFail)
   });
 };
 

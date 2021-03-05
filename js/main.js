@@ -3,15 +3,14 @@ import { syncCheckTime } from './form/check-time.js';
 import { makeFormsDisabled } from './form/active-disabled-forms.js';
 import { initMapWhitServerData } from './map.js';
 import { syncSelects } from './form/select-rooms-capacity.js';
-import { showSuccessMessage } from './form/show-success-message.js'
+import { showSuccessPopupMessage } from './form/show-success-message.js'
+import { showErrorPopupMessage } from './form/show-error-message.js'
 import { submitForm } from './form/submit-form.js';
 
 
 const adForm = document.querySelector('.ad-form');
 const sendURL = 'https://22.javascript.pages.academy/keksobooking';
 
-const succeessMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-const mainContentWrap = document.querySelector('main')
 
 
 const roomsSelect = document.querySelector('#room_number')
@@ -21,8 +20,6 @@ makeFormsDisabled();
 
 const mainFunctions = () => {
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('html загружен, DOM готов')
-
     initMapWhitServerData();
 
     setInputMinPrice();
@@ -33,6 +30,10 @@ const mainFunctions = () => {
     })
 
   });
+
+  submitForm(adForm, sendURL, showSuccessPopupMessage, showErrorPopupMessage);
+
 }
+
+
 mainFunctions();
-submitForm(adForm, sendURL, showSuccessMessage(succeessMessageTemplate, mainContentWrap));

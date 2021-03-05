@@ -1,10 +1,33 @@
-const showSuccessMessage = (messageTemlate, parentElemnt) => {
-  // копируем шаблон со всем его содержимым true в новую переменную
-  const messageElement = messageTemlate.cloneNode(true);
-  parentElemnt.append(messageElement);
-  setTimeout(() => {
-    messageElement.remove();
-  }, 1000);
+import { isEscEvent } from '../util.js';
+
+const mainContentWrap = document.querySelector('main')
+const succeessMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+// const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+// const closeErrPopupBtn = document.querySelector('.error__button')
+
+const showSuccessPopupMessage = async () => {
+  const messageElement = succeessMessageTemplate.cloneNode(true);
+  await mainContentWrap.append(messageElement)
+  await document.addEventListener('keydown', onEscKeydownCloseSuccess)
+  await document.addEventListener('click', onClickCloseSuccess)
+};
+
+const onEscKeydownCloseSuccess = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    closeSuccessPopup();
+  }
+};
+const onClickCloseSuccess = () => {
+  closeSuccessPopup();
 }
 
-export { showSuccessMessage };
+const closeSuccessPopup = () => {
+  const successElementMessage = document.querySelector('.success')
+  successElementMessage.remove();
+  document.removeEventListener('keydown', onEscKeydownCloseSuccess);
+  document.removeEventListener('click', onClickCloseSuccess)
+}
+
+
+export { showSuccessPopupMessage };

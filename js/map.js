@@ -48,8 +48,6 @@ const movePinPasteLocation = (pin, input) => {
 const loadMap = async () => {
   try {
     map.on('load', () => {
-      // при загрузке карты - формы разблокируются
-      console.log('карта загружена');
       makeFormsActive();
     })
       .setView({
@@ -66,7 +64,7 @@ const initMap = () => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-  console.log('карта отрисована')
+
   // добавлние главной метки на карту
   mainPinMarker.addTo(map);
   movePinPasteLocation(mainPinMarker, inputAddress);
@@ -74,17 +72,14 @@ const initMap = () => {
 
 // функция получения меток из массива сгенерированных объявлений
 const createPointsOnMap = (map, array, icon) => {
-  console.log('начинаю делать метки на карту')
   return new Promise(() => {
     // создадим массив данных объявлений для метками
     const points = array;
-    console.log(points)
     // создаим массив html элементов по шаблону для попапов
     const pointElements = createOfferElemtns(points);
 
     // для каждой метки получим данные, настроим попап и выведем на карту
     points.forEach((point, index) => {
-      console.log(`делаю метку...№${index + 1}`)
       const lat = point.location.lat;
       const lng = point.location.lng;
       const marker = L.marker(
@@ -107,7 +102,6 @@ const createPointsOnMap = (map, array, icon) => {
           },
         );
     })
-    console.log('метки сделаны')
   })
 };
 

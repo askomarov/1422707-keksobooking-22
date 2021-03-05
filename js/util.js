@@ -75,4 +75,9 @@ const showAlert = (message) => {
     alertContainer.remove();
   }, 5000);
 }
-export { getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomLengthArray, checkHouseType, changeAttribute, checkStringLength, showAlert };
+
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
+export { getRandomInteger, getRandomFloat, getRandomArrayElement, getRandomLengthArray, checkHouseType, changeAttribute, checkStringLength, showAlert, isEscEvent };
