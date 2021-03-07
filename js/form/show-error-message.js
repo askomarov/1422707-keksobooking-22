@@ -5,7 +5,7 @@ const mainContentWrap = document.querySelector('main')
 
 const removeBtnCloseListner = (btn) => {
   btn.removeEventListener('click', onBtnCloseError)
-}
+};
 
 const closePopupError = () => {
   const errorElementMessage = document.querySelector('.error')
@@ -19,6 +19,7 @@ const onEscKeydownCloseError = (evt) => {
     closePopupError();
   }
 };
+
 const onBtnCloseError = (evt) => {
   closePopupError();
   evt.target.removeEventListener('click', onBtnCloseError);
