@@ -1,9 +1,11 @@
 /*global L:readonly*/
 import { makeFormsActive } from './form/active-disabled-forms.js';
 import { showAlert } from './util.js';
-import { createOfferElemtns } from './popup.js';
-import { getDataFromServer } from './get-send-data.js'
+import { createPopupElements } from './popup.js';
+import { getData } from './get-send-data.js'
 import { makeFormsDisabled } from './form/active-disabled-forms.js';
+
+const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
 
 const mapWrapper = document.querySelector('#map-canvas');
 const map = L.map(mapWrapper);
@@ -25,18 +27,16 @@ const mainPinMarker = L.marker(
     icon: mainPinIcon,
   },
 );
-
-
+// метки объявлений
 const simplePinIcon = L.icon({
   iconUrl: 'img/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
-
+// инпут в который вставляем геоданные главной метки
 const adForm = document.querySelector('.ad-form');
 const inputAddress = adForm.querySelector('#address');
-
-// функция получения координат метки при заверешении ее перемещения и функция вставки данных в инпут
+// функция получения координат метки при заверешении ее перемещения и вставки данных в инпут
 const movePinPasteLocation = (pin, input) => {
   pin.on('moveend', (evt) => {
     const addressXY = evt.target.getLatLng();
@@ -46,7 +46,7 @@ const movePinPasteLocation = (pin, input) => {
   });
 };
 
-const loadMap = async () => {
+const loadMap = () => {
   try {
     map.on('load', () => {
       makeFormsActive();
@@ -56,7 +56,7 @@ const loadMap = async () => {
         lng: 139.75388,
       }, 13);
   } catch (error) { showAlert(error); makeFormsDisabled() }
-}
+};
 
 const initMap = () => {
   L.tileLayer(
@@ -71,51 +71,50 @@ const initMap = () => {
   movePinPasteLocation(mainPinMarker, inputAddress);
 };
 
-// функция получения меток из массива сгенерированных объявлений
-const createPointsOnMap = (map, array, icon) => {
-  return new Promise(() => {
-    // создадим массив данных объявлений для метками
-    const points = array;
-    // создаим массив html элементов по шаблону для попапов
-    const pointElements = createOfferElemtns(points);
+const createSimplePinMap = (lat, lng, popupElement) => {
+  const marker = L.marker(
+    {
+      lat,
+      lng,
+    },
+    {
+      icon: simplePinIcon,
+    },
+  );
+  marker
+    // каждая метка добавляется на карту
+    .addTo(map)
+    // для каждой метки в попап выводим html элемент
+    .bindPopup(
+      popupElement,
+      {
+        keepInView: true,
+      },
+    );
+};
 
-    // для каждой метки получим данные, настроим попап и выведем на карту
-    points.forEach((point, index) => {
-      const lat = point.location.lat;
-      const lng = point.location.lng;
-      const marker = L.marker(
-        {
-          lat,
-          lng,
-        },
-        {
-          icon: icon,
-        },
-      );
-      marker
-        // каждая метка добавляется на карту
-        .addTo(map)
-        // для каждой метки в попап выводим html элемент
-        .bindPopup(
-          pointElements[index],
-          {
-            keepInView: true,
-          },
-        );
-    })
+// функция получения меток из массива сгенерированных объявлений
+const createPointsOnMap = (array) => {
+  // создаим массив html элементов по шаблону для попапов
+  const pointPopupElements = createPopupElements(array);
+  // для каждой метки получим данные, настроим попап и выведем на карту
+  array.forEach((point, index) => {
+    const lat = point.location.lat;
+    const lng = point.location.lng;
+    createSimplePinMap(lat, lng, pointPopupElements[index])
   })
 };
 
-const initMapWhitServerData = async function () {
-  getDataFromServer()
+const initMapWhitServerData = () => {
+  getData(getURL)
     .then((data) => {
-      createPointsOnMap(map, data, simplePinIcon)
+      createPointsOnMap(data)
     })
+    .then(loadMap())
+    .then(initMap())
     .catch((err) => {
       showAlert('Ошибка..:' + err);
     });
-
-  await loadMap().then(initMap);
 };
 
 const setPositionMainPin = () => {
@@ -123,6 +122,3 @@ const setPositionMainPin = () => {
 };
 
 export { initMapWhitServerData, setPositionMainPin }
-
-
-

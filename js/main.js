@@ -6,31 +6,28 @@ import { syncSelects } from './form/select-rooms-capacity.js';
 import { submitForm } from './form/submit-form.js'
 
 const btnResetForm = document.querySelector('.ad-form__reset');
-
 const roomsSelect = document.querySelector('#room_number');
 const capacitySelect = document.querySelector('#capacity');
 
 makeFormsDisabled();
 
 const mainFunctions = () => {
-  document.addEventListener('DOMContentLoaded', () => {
-    initMapWhitServerData();
+  initMapWhitServerData();
 
-    setInputMinPrice();
-    syncCheckTime();
+  setInputMinPrice();
+  syncCheckTime();
 
-    roomsSelect.addEventListener('change', () => {
-      syncSelects(roomsSelect, capacitySelect);
-    })
-
+  roomsSelect.addEventListener('change', () => {
+    syncSelects(roomsSelect, capacitySelect);
   });
 
   submitForm();
 
   btnResetForm.addEventListener('click', () => {
     setPositionMainPin()
-  })
+  });
 }
 
-
-mainFunctions();
+document.addEventListener('DOMContentLoaded', () => {
+  mainFunctions();
+});

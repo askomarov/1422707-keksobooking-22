@@ -1,22 +1,18 @@
-import { showAlert } from './util.js';
-
-const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
-
-const getDataFromServer = () => {
+const getData = (getURL) => {
   return fetch(getURL)
     .then((response) => response.json())
-    .catch(() => {
-      showAlert('При загрузке данных с сервера произошла ошибка');
-    });
 };
 
-const sendData = async (url, data) => {
-  fetch(url,
+const sendData = (url, data, onSuccess, onFail) => {
+  return fetch(url,
     {
       method: 'POST',
       body: data,
     },
   )
+    .then(onSuccess)
+    .catch(onFail)
 };
 
-export { getDataFromServer, sendData };
+
+export { getData, sendData };
