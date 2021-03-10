@@ -1,13 +1,19 @@
 import { isEscEvent } from '../util.js';
+import { setPositionMainPin } from '../map.js';
+
+const adForm = document.querySelector('.ad-form');
 
 const mainContentWrap = document.querySelector('main')
 const succeessMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 
-const showSuccessPopupMessage = async () => {
-  const messageElement = succeessMessageTemplate.cloneNode(true);
-  await mainContentWrap.append(messageElement)
-  await document.addEventListener('keydown', onEscKeydownCloseSuccess)
-  await document.addEventListener('click', onClickCloseSuccess)
+const closeSuccessPopup = () => {
+  document.querySelector('.success').remove();
+  document.removeEventListener('keydown', onEscKeydownCloseSuccess);
+  document.removeEventListener('click', onClickCloseSuccess);
+};
+
+const onClickCloseSuccess = () => {
+  closeSuccessPopup();
 };
 
 const onEscKeydownCloseSuccess = (evt) => {
@@ -17,15 +23,13 @@ const onEscKeydownCloseSuccess = (evt) => {
   }
 };
 
-const onClickCloseSuccess = () => {
-  closeSuccessPopup();
+const showSuccessPopupMessage = () => {
+  const messageElement = succeessMessageTemplate.cloneNode(true);
+  mainContentWrap.append(messageElement);
+  document.addEventListener('keydown', onEscKeydownCloseSuccess);
+  document.addEventListener('click', onClickCloseSuccess);
+  adForm.reset();
+  setPositionMainPin();
 };
-
-const closeSuccessPopup = () => {
-  const successElementMessage = document.querySelector('.success')
-  successElementMessage.remove();
-  document.removeEventListener('keydown', onEscKeydownCloseSuccess);
-  document.removeEventListener('click', onClickCloseSuccess)
-}
 
 export { showSuccessPopupMessage };

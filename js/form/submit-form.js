@@ -1,19 +1,12 @@
 import { sendData } from '../get-send-data.js';
-import { setPositionMainPin } from '../map.js';
-import { showSuccessPopupMessage } from './show-success-message.js'
-import { showErrorPopupMessage } from './show-error-message.js'
 
 const adForm = document.querySelector('.ad-form');
 
-const sendURL = 'https://22.javascript.pages.academy/keksobooking';
-
-const submitForm = () => {
+const submitForm = (sendURL, onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const formData = new FormData(evt.target);
-    sendData(sendURL, formData, showSuccessPopupMessage, showErrorPopupMessage)
-      .then(adForm.reset())
-      .then(setPositionMainPin())
+    sendData(sendURL, new FormData(evt.target), onSuccess, onFail)
   });
 };
+
 export { submitForm };

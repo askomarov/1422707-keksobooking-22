@@ -3,16 +3,6 @@ import { isEscEvent } from '../util.js';
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 const mainContentWrap = document.querySelector('main')
 
-const removeBtnCloseListner = (btn) => {
-  btn.removeEventListener('click', onBtnCloseError)
-};
-
-const closePopupError = () => {
-  const errorElementMessage = document.querySelector('.error')
-  errorElementMessage.remove();
-  document.removeEventListener('keydown', onEscKeydownCloseError);
-};
-
 const onEscKeydownCloseError = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
@@ -20,20 +10,22 @@ const onEscKeydownCloseError = (evt) => {
   }
 };
 
+const closePopupError = () => {
+  document.querySelector('.error').remove();
+  document.removeEventListener('keydown', onEscKeydownCloseError);
+};
+
 const onBtnCloseError = (evt) => {
   closePopupError();
   evt.target.removeEventListener('click', onBtnCloseError);
 };
 
-const showErrorPopupMessage = async () => {
+const showErrorPopupMessage = () => {
   const messageElement = errorMessageTemplate.cloneNode(true);
-  await mainContentWrap.append(messageElement);
-  const closeErrPopupBtn = await document.querySelector('.error__button');
-  await closeErrPopupBtn.addEventListener('click', onBtnCloseError);
-  await document.addEventListener('keydown', (evt) => {
-    onEscKeydownCloseError(evt);
-    removeBtnCloseListner(closeErrPopupBtn);
-  })
+  mainContentWrap.append(messageElement);
+  const closeErrPopupBtn = document.querySelector('.error__button');
+  closeErrPopupBtn.addEventListener('click', onBtnCloseError);
+  document.addEventListener('keydown', onEscKeydownCloseError);
 };
 
 export { showErrorPopupMessage };

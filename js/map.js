@@ -2,10 +2,9 @@
 import { makeFormsActive } from './form/active-disabled-forms.js';
 import { showAlert } from './util.js';
 import { createPopupElements } from './popup.js';
-import { getData } from './get-send-data.js'
 import { makeFormsDisabled } from './form/active-disabled-forms.js';
 
-const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
+
 
 const mapWrapper = document.querySelector('#map-canvas');
 const map = L.map(mapWrapper);
@@ -105,20 +104,8 @@ const createPointsOnMap = (array) => {
   })
 };
 
-const initMapWhitServerData = () => {
-  getData(getURL)
-    .then((data) => {
-      createPointsOnMap(data)
-    })
-    .then(loadMap())
-    .then(initMap())
-    .catch((err) => {
-      showAlert('Ошибка..:' + err);
-    });
-};
-
 const setPositionMainPin = () => {
   mainPinMarker.setLatLng([35.6817, 139.753882])
 };
 
-export { initMapWhitServerData, setPositionMainPin }
+export { createPointsOnMap, loadMap, initMap, setPositionMainPin }
