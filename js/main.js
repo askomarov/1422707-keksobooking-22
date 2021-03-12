@@ -1,8 +1,8 @@
 import { showAlert } from './util.js';
 import { setInputMinPrice } from './form/input-price.js';
 import { syncCheckTime } from './form/check-time.js';
-import { makeFormsDisabled } from './form/active-disabled-forms.js';
-import { loadMap, initMap, createPointsOnMap, setPositionMainPin } from './map.js';
+import { makeFormsDisabled, makeMapFormsActive } from './form/active-disabled-forms.js';
+import { loadMap, createPointsOnMap, setPositionMainPin } from './map.js';
 import { syncSelects } from './form/select-rooms-capacity.js';
 import { submitForm } from './form/submit-form.js';
 import { showSuccessPopupMessage } from './form/show-success-message.js';
@@ -17,20 +17,18 @@ const roomsSelect = document.querySelector('#room_number');
 const capacitySelect = document.querySelector('#capacity');
 
 
-const initMapWhitServerData = (getURL, onSuccess) => {
-  // может сюда вторым паарметром сразу передевать createPointsOnMap, а сверху этот параметр убрать??
-  getData(getURL, onSuccess)
-    .then(loadMap())
-    .then(initMap())
-    .catch((err) => {
-      showAlert('Ошибка..:' + err);
-    });
-};
-
 makeFormsDisabled();
 
+const getDataSuccess = (data) => {
+  createPointsOnMap(data)
+  makeMapFormsActive();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-  initMapWhitServerData(getURL, createPointsOnMap);
+
+  loadMap();
+
+  getData(getURL, getDataSuccess, showAlert);
 
   setInputMinPrice();
   syncCheckTime();

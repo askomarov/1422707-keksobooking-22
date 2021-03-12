@@ -1,10 +1,7 @@
 /*global L:readonly*/
-import { makeFormsActive } from './form/active-disabled-forms.js';
+import { makeFormsDisabled, makeAddFormsActive } from './form/active-disabled-forms.js';
 import { showAlert } from './util.js';
 import { createPopupElements } from './popup.js';
-import { makeFormsDisabled } from './form/active-disabled-forms.js';
-
-
 
 const mapWrapper = document.querySelector('#map-canvas');
 const map = L.map(mapWrapper);
@@ -44,19 +41,6 @@ const movePinPasteLocation = (pin, input) => {
     input.value = `${a}, ${b}`;
   });
 };
-
-const loadMap = () => {
-  try {
-    map.on('load', () => {
-      makeFormsActive();
-    })
-      .setView({
-        lat: 35.6817,
-        lng: 139.75388,
-      }, 13);
-  } catch (error) { showAlert(error); makeFormsDisabled() }
-};
-
 const initMap = () => {
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -69,6 +53,21 @@ const initMap = () => {
   mainPinMarker.addTo(map);
   movePinPasteLocation(mainPinMarker, inputAddress);
 };
+
+const loadMap = () => {
+  try {
+    map.on('load', () => {
+      makeAddFormsActive();
+      initMap();
+    })
+      .setView({
+        lat: 35.6817,
+        lng: 139.75388,
+      }, 13);
+  } catch (error) { showAlert(error); makeFormsDisabled() }
+};
+
+
 
 const createSimplePinMap = (lat, lng, popupElement) => {
   const marker = L.marker(
@@ -108,4 +107,4 @@ const setPositionMainPin = () => {
   mainPinMarker.setLatLng([35.6817, 139.753882])
 };
 
-export { createPointsOnMap, loadMap, initMap, setPositionMainPin }
+export { createPointsOnMap, loadMap, setPositionMainPin }
