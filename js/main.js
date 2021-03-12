@@ -1,19 +1,45 @@
+import { showAlert } from './util.js';
 import { setInputMinPrice } from './form/input-price.js';
 import { syncCheckTime } from './form/check-time.js';
-import { makeFormsDisabled } from './form/active-disabled-forms.js';
-import { initMap } from './map.js';
+import { makeFormsDisabled, makeMapFormsActive } from './form/active-disabled-forms.js';
+import { loadMap, createPointsOnMap, setPositionMainPin } from './map.js';
 import { syncSelects } from './form/select-rooms-capacity.js';
-makeFormsDisabled();
+import { submitForm } from './form/submit-form.js';
+import { showSuccessPopupMessage } from './form/show-success-message.js';
+import { showErrorPopupMessage } from './form/show-error-message.js';
+import { getData } from './get-send-data.js';
 
-const roomsSelect = document.querySelector('#room_number')
+const sendURL = 'https://22.javascript.pages.academy/keksobooking';
+const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
+
+const btnResetForm = document.querySelector('.ad-form__reset');
+const roomsSelect = document.querySelector('#room_number');
 const capacitySelect = document.querySelector('#capacity');
 
+
+makeFormsDisabled();
+
+const getDataSuccess = (data) => {
+  createPointsOnMap(data)
+  makeMapFormsActive();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-  initMap();
+
+  loadMap();
+
+  getData(getURL, getDataSuccess, showAlert);
+
   setInputMinPrice();
   syncCheckTime();
 
   roomsSelect.addEventListener('change', () => {
     syncSelects(roomsSelect, capacitySelect);
-  })
+  });
+
+  submitForm(sendURL, showSuccessPopupMessage, showErrorPopupMessage);
+
+  btnResetForm.addEventListener('click', () => {
+    setPositionMainPin()
+  });
 });

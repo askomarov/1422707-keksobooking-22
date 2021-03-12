@@ -20,12 +20,14 @@ const makeFormsDisabled = () => {
   });
 }
 
-const makeFormsActive = () => {
+const makeAddFormsActive = () => {
   adForm.classList.remove('ad-form--disabled');
   adFormFieldsets.forEach(fieldset => {
     fieldset.removeAttribute('disabled')
   });
+};
 
+const makeMapFormsActive = () => {
   mapForm.classList.remove('map__filters--disabled');
   mapFormFieldsets.forEach(fieldset => {
     fieldset.removeAttribute('disabled')
@@ -33,6 +35,6 @@ const makeFormsActive = () => {
   mapFormSelects.forEach(select => {
     select.removeAttribute('disabled')
   });
-}
+};
 
-export { makeFormsDisabled, makeFormsActive }
+export { makeFormsDisabled, makeAddFormsActive, makeMapFormsActive }
