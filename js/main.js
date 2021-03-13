@@ -8,6 +8,8 @@ import { submitForm } from './form/submit-form.js';
 import { showSuccessPopupMessage } from './form/show-success-message.js';
 import { showErrorPopupMessage } from './form/show-error-message.js';
 import { getData } from './get-send-data.js';
+import { turnOnFilterListener } from './map-filter.js';
+const OFFER_QUANTITY = 10;
 
 const sendURL = 'https://22.javascript.pages.academy/keksobooking';
 const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
@@ -20,7 +22,8 @@ const capacitySelect = document.querySelector('#capacity');
 makeFormsDisabled();
 
 const getDataSuccess = (data) => {
-  createPointsOnMap(data)
+  createPointsOnMap(data.slice(0, OFFER_QUANTITY))
+  turnOnFilterListener(data)
   makeMapFormsActive();
 };
 

@@ -1,7 +1,8 @@
 /*global L:readonly*/
 import { makeFormsDisabled, makeAddFormsActive } from './form/active-disabled-forms.js';
 import { showAlert } from './util.js';
-import { createPopupElements } from './popup.js';
+import { createOnePopupELement } from './popup.js';
+import { } from './map-filter.js'
 
 const mapWrapper = document.querySelector('#map-canvas');
 const map = L.map(mapWrapper);
@@ -41,6 +42,7 @@ const movePinPasteLocation = (pin, input) => {
     input.value = `${a}, ${b}`;
   });
 };
+
 const initMap = () => {
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -66,45 +68,39 @@ const loadMap = () => {
       }, 13);
   } catch (error) { showAlert(error); makeFormsDisabled() }
 };
-
-
-
-const createSimplePinMap = (lat, lng, popupElement) => {
-  const marker = L.marker(
-    {
-      lat,
-      lng,
-    },
-    {
-      icon: simplePinIcon,
-    },
-  );
-  marker
-    // каждая метка добавляется на карту
-    .addTo(map)
-    // для каждой метки в попап выводим html элемент
-    .bindPopup(
-      popupElement,
+const markers = [];
+// функция получения меток из массива данных
+const createPointsOnMap = (array) => {
+  array.forEach((point) => {
+    const marker = L.marker(
       {
-        keepInView: true,
+        lat: point.location.lat,
+        lng: point.location.lng,
+      },
+      {
+        icon: simplePinIcon,
       },
     );
+    marker
+      .addTo(map)
+      .bindPopup(
+        createOnePopupELement(point),
+        {
+          keepInView: true,
+        });
+    markers.push(marker)
+  });
 };
 
-// функция получения меток из массива сгенерированных объявлений
-const createPointsOnMap = (array) => {
-  // создаим массив html элементов по шаблону для попапов
-  const pointPopupElements = createPopupElements(array);
-  // для каждой метки получим данные, настроим попап и выведем на карту
-  array.forEach((point, index) => {
-    const lat = point.location.lat;
-    const lng = point.location.lng;
-    createSimplePinMap(lat, lng, pointPopupElements[index])
-  })
+const deleteMarker = () => {
+  markers.forEach(marker => {
+    marker.remove()
+  });
 };
+
 
 const setPositionMainPin = () => {
   mainPinMarker.setLatLng([35.6817, 139.753882])
 };
 
-export { createPointsOnMap, loadMap, setPositionMainPin }
+export { createPointsOnMap, deleteMarker, loadMap, setPositionMainPin }
