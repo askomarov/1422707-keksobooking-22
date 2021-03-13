@@ -1,14 +1,9 @@
 import { showAlert } from './util.js';
-import { setInputMinPrice } from './form/input-price.js';
-import { syncCheckTime } from './form/check-time.js';
-import { makeFormsDisabled, makeMapFormsActive } from './form/active-disabled-forms.js';
+import { setInputMinPrice, syncSelects, syncCheckTime, makeFormsDisabled, makeMapFormsActive, submitForm, showSuccessPopupMessage, showErrorPopupMessage } from './form.js';
 import { loadMap, createPointsOnMap, setPositionMainPin } from './map.js';
-import { syncSelects } from './form/select-rooms-capacity.js';
-import { submitForm } from './form/submit-form.js';
-import { showSuccessPopupMessage } from './form/show-success-message.js';
-import { showErrorPopupMessage } from './form/show-error-message.js';
 import { getData } from './get-send-data.js';
-import { turnOnFilterListener } from './map-filter.js';
+import { turnOnFilterListener } from './filter-map-form.js';
+
 const OFFER_QUANTITY = 10;
 
 const sendURL = 'https://22.javascript.pages.academy/keksobooking';

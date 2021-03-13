@@ -1,8 +1,8 @@
 /*global L:readonly*/
-import { makeFormsDisabled, makeAddFormsActive } from './form/active-disabled-forms.js';
+import { makeFormsDisabled, makeAddFormsActive } from './form.js';
 import { showAlert } from './util.js';
 import { createOnePopupELement } from './popup.js';
-import { } from './map-filter.js'
+import { } from './filter-map-form.js'
 
 const mapWrapper = document.querySelector('#map-canvas');
 const map = L.map(mapWrapper);

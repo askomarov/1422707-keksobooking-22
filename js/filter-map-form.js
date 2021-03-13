@@ -9,6 +9,7 @@ const houseGuestsFilter = mapFiltersForm.querySelector('#housing-guests');
 
 
 const FILTERED_OFFER_QUANTITY = 10;
+// не чаще, чем раз в полсекунды (устранение дребезга).
 const RERENDER_DELAY = 500;
 const PRICE_LOW = 10000;
 const PRICE_HIGH = 50000;
