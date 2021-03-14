@@ -1,17 +1,15 @@
 import { showAlert } from './util.js';
-import { setInputMinPrice, syncSelects, syncCheckTime, makeFormsDisabled, makeMapFormsActive, submitForm, showSuccessPopupMessage, showErrorPopupMessage } from './form.js';
-import { loadMap, createPointsOnMap, setPositionMainPin } from './map.js';
+import { setInputMinPrice, roomsSelectListener, syncCheckTime, makeFormsDisabled, makeMapFormsActive, submitForm, showSuccessPopupMessage, showErrorPopupMessage, onBtnResetAddFormListener } from './form.js';
+import { loadMap, createPointsOnMap } from './map.js';
 import { getData } from './get-send-data.js';
 import { turnOnFilterListener } from './filter-map-form.js';
+import { previewAvatar, previewBackground } from './preview-avatar-background.js';
 
 const OFFER_QUANTITY = 10;
 
 const sendURL = 'https://22.javascript.pages.academy/keksobooking';
 const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
 
-const btnResetForm = document.querySelector('.ad-form__reset');
-const roomsSelect = document.querySelector('#room_number');
-const capacitySelect = document.querySelector('#capacity');
 
 
 makeFormsDisabled();
@@ -30,14 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setInputMinPrice();
   syncCheckTime();
-
-  roomsSelect.addEventListener('change', () => {
-    syncSelects(roomsSelect, capacitySelect);
-  });
+  roomsSelectListener();
 
   submitForm(sendURL, showSuccessPopupMessage, showErrorPopupMessage);
 
-  btnResetForm.addEventListener('click', () => {
-    setPositionMainPin()
-  });
+  onBtnResetAddFormListener();
+
+  previewAvatar();
+  previewBackground()
 });

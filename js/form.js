@@ -1,12 +1,16 @@
 import { changeAttribute, isEscEvent } from './util.js'
 import { setPositionMainPin } from './map.js';
 import { sendData } from './get-send-data.js';
+import { resetImageSrc, resetBackgroundPreview } from './preview-avatar-background.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
+const buttonResetAdForm = document.querySelector('.ad-form__reset');
 const mapForm = document.querySelector('.map__filters');
 const mapFormSelects = mapForm.querySelectorAll('select');
 const mapFormFieldsets = mapForm.querySelectorAll('fieldset');
+const roomsSelect = document.querySelector('#room_number');
+const capacitySelect = document.querySelector('#capacity');
 //////////// активация/дезактивация форм
 const makeFormsDisabled = () => {
   adForm.classList.add('ad-form--disabled');
@@ -139,6 +143,11 @@ const syncSelects = (mainSelect, selectToSync) => {
     }
   }
 };
+const roomsSelectListener = () => {
+  roomsSelect.addEventListener('change', () => {
+    syncSelects(roomsSelect, capacitySelect);
+  });
+};
 
 //////// показ и скрытие сообщени при неусешной отправки формы
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
@@ -196,6 +205,8 @@ const showSuccessPopupMessage = () => {
   document.addEventListener('click', onClickCloseSuccess);
   adForm.reset();
   setPositionMainPin();
+  resetImageSrc();
+  resetBackgroundPreview();
 };
 
 ///////// отправка формы нового объяаления
@@ -205,6 +216,15 @@ const submitForm = (sendURL, onSuccess, onFail) => {
     sendData(sendURL, new FormData(evt.target), onSuccess, onFail)
   });
 };
+///////сброс формы по клику
+const onBtnResetAddFormListener = () => {
+  buttonResetAdForm.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    adForm.reset();
+    setPositionMainPin();
+    resetImageSrc();
+    resetBackgroundPreview();
+  });
+};
 
-
-export { makeFormsDisabled, makeAddFormsActive, makeMapFormsActive, setInputMinPrice, syncCheckTime, syncSelects, showErrorPopupMessage, showSuccessPopupMessage, submitForm }
+export { makeFormsDisabled, makeAddFormsActive, makeMapFormsActive, setInputMinPrice, syncCheckTime, syncSelects, showErrorPopupMessage, showSuccessPopupMessage, submitForm, onBtnResetAddFormListener, roomsSelectListener }
