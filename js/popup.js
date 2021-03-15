@@ -56,4 +56,12 @@ const createPopupElements = (array) => {
   return popupElementsList;
 };
 
-export { createPopupElements };
+const createOnePopupELement = (element) => {
+  const popupElement = similarCardTemplate.cloneNode(true);
+  fillPopupElement(element, popupElement);
+  renderFeaturesElemnts(element, popupElement);
+  renderPhotosElemnts(element, popupElement);
+  return popupElement;
+}
+
+export { createPopupElements, createOnePopupELement };

@@ -1,26 +1,22 @@
 import { showAlert } from './util.js';
-import { setInputMinPrice } from './form/input-price.js';
-import { syncCheckTime } from './form/check-time.js';
-import { makeFormsDisabled, makeMapFormsActive } from './form/active-disabled-forms.js';
-import { loadMap, createPointsOnMap, setPositionMainPin } from './map.js';
-import { syncSelects } from './form/select-rooms-capacity.js';
-import { submitForm } from './form/submit-form.js';
-import { showSuccessPopupMessage } from './form/show-success-message.js';
-import { showErrorPopupMessage } from './form/show-error-message.js';
+import { setInputMinPrice, roomsSelectListener, syncCheckTime, makeFormsDisabled, makeMapFormsActive, submitForm, showSuccessPopupMessage, showErrorPopupMessage, onBtnResetAddFormListener } from './form.js';
+import { loadMap, createPointsOnMap } from './map.js';
 import { getData } from './get-send-data.js';
+import { turnOnFilterListener } from './filter-map-form.js';
+import { previewAvatar, previewBackground } from './preview-avatar-background.js';
+
+const OFFER_QUANTITY = 10;
 
 const sendURL = 'https://22.javascript.pages.academy/keksobooking';
 const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
 
-const btnResetForm = document.querySelector('.ad-form__reset');
-const roomsSelect = document.querySelector('#room_number');
-const capacitySelect = document.querySelector('#capacity');
 
 
 makeFormsDisabled();
 
 const getDataSuccess = (data) => {
-  createPointsOnMap(data)
+  createPointsOnMap(data.slice(0, OFFER_QUANTITY))
+  turnOnFilterListener(data)
   makeMapFormsActive();
 };
 
@@ -32,14 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setInputMinPrice();
   syncCheckTime();
-
-  roomsSelect.addEventListener('change', () => {
-    syncSelects(roomsSelect, capacitySelect);
-  });
+  roomsSelectListener();
 
   submitForm(sendURL, showSuccessPopupMessage, showErrorPopupMessage);
 
-  btnResetForm.addEventListener('click', () => {
-    setPositionMainPin()
-  });
+  onBtnResetAddFormListener();
+
+  previewAvatar();
+  previewBackground()
 });
