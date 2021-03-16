@@ -5,8 +5,9 @@
 *.pdf
 *.psd
 *.sublime*
-build/
+source/
 node_modules/
 npm-debug.log*
 Thumbs.db
 .vscode/
+# Исправьте файл .gitignore так, чтобы Git игнорировал собранные в бандл исходники, а не всю директорию build.
