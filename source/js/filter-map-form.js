@@ -12,9 +12,7 @@ const houseRoomsFilter = mapFiltersForm.querySelector('#housing-rooms');
 const houseGuestsFilter = mapFiltersForm.querySelector('#housing-guests');
 
 const filterByType = (item) => {
-  if (houseTypeFilter.value === 'any' || item.offer.type === houseTypeFilter.value) {
-    return true
-  } false;
+  return houseTypeFilter.value === 'any' || item.offer.type === houseTypeFilter.value
 };
 
 const filterByPrice = (item) => {
@@ -38,35 +36,28 @@ const filterByFeatures = (item) => {
     checkedFeatures.forEach((feature) => {
       if (item.offer.features.includes(feature.value)) {
         intemIncludeFeature++;
-      } false
+      } return false
     });
-    if (intemIncludeFeature === checkedFeatures.length) {
-      return true
-    } false
+    return intemIncludeFeature === checkedFeatures.length
   }
 };
 
 const filterByRooms = (item) => {
-  if (houseRoomsFilter.value === 'any' || item.offer.rooms === Number(houseRoomsFilter.value)) {
-    return true
-  } false
+  return houseRoomsFilter.value === 'any' || item.offer.rooms === Number(houseRoomsFilter.value)
 };
 
 const filterByGuests = (item) => {
-  if (houseGuestsFilter.value === 'any' || item.offer.guests === Number(houseGuestsFilter.value)) {
-    return true
-  } false
+  return houseGuestsFilter.value === 'any' || item.offer.guests === Number(houseGuestsFilter.value)
+};
+
+const filteredItem = (item) => {
+  return filterByType(item) && filterByPrice(item) && filterByFeatures(item) && filterByRooms(item) && filterByGuests(item)
 };
 
 const renderFilteredArray = (array) => {
-  const filteredArray = array
-    .filter(filterByType)
-    .filter(filterByPrice)
-    .filter(filterByRooms)
-    .filter(filterByGuests)
-    .filter(filterByFeatures);
+  const filteredItems = array.filter(filteredItem)
   deleteMarker();
-  createPointsOnMap(filteredArray);
+  createPointsOnMap(filteredItems);
 };
 
 const filterMapForm = (array) => {
