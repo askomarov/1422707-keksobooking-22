@@ -2,7 +2,8 @@
 import { makeFormsDisabled, makeAddFormsActive } from './form.js';
 import { showAlert } from './util.js';
 import { createOnePopupELement } from './popup.js';
-import { } from './filter-map-form.js'
+
+const OFFER_QUANTITY = 10;
 
 const mapWrapper = document.querySelector('#map-canvas');
 const map = L.map(mapWrapper);
@@ -68,10 +69,11 @@ const loadMap = () => {
       }, 13);
   } catch (error) { showAlert(error); makeFormsDisabled() }
 };
+
 const markers = [];
 // функция получения меток из массива данных
 const createPointsOnMap = (array) => {
-  array.forEach((point) => {
+  array.slice(0, OFFER_QUANTITY).forEach((point) => {
     const marker = L.marker(
       {
         lat: point.location.lat,
