@@ -1,5 +1,5 @@
 import { changeAttribute, isEscEvent } from './util.js'
-import { setPositionMainPin } from './map.js';
+import { setPositionMainPin, resetMarkers } from './map.js';
 import { sendData } from './get-send-data.js';
 import { resetImageSrc, resetBackgroundPreview } from './preview-avatar-background.js';
 
@@ -24,7 +24,7 @@ const makeFormsDisabled = () => {
   mapFormSelects.forEach(select => {
     select.setAttribute('disabled', 'disabled')
   });
-}
+};
 
 const makeAddFormsActive = () => {
   adForm.classList.remove('ad-form--disabled');
@@ -70,7 +70,7 @@ const setInputMinPrice = () => {
 };
 ///////////////////////////// синзронизация врмени заезда/выезда
 const timeIn = document.querySelector('#timein');
-const timeOut = document.querySelector('#timeout')
+const timeOut = document.querySelector('#timeout');
 
 const syncSelectValue = (select1, select2) => {
   select1.addEventListener('change', () => {
@@ -198,33 +198,34 @@ const onEscKeydownCloseSuccess = (evt) => {
   }
 };
 
+const onResetForm = () => {
+  adForm.reset();
+  mapForm.reset();
+  setPositionMainPin();
+  resetImageSrc();
+  resetBackgroundPreview();
+  resetMarkers();
+};
+
 const showSuccessPopupMessage = () => {
   const messageElement = succeessMessageTemplate.cloneNode(true);
   mainContentWrap.append(messageElement);
   document.addEventListener('keydown', onEscKeydownCloseSuccess);
   document.addEventListener('click', onClickCloseSuccess);
-  adForm.reset();
-  setPositionMainPin();
-  resetImageSrc();
-  resetBackgroundPreview();
+  onResetForm();
 };
-
 ///////// отправка формы нового объяаления
 const submitForm = (sendURL, onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    sendData(sendURL, new FormData(evt.target), onSuccess, onFail)
+    sendData(sendURL, new FormData(evt.target), onSuccess, onFail);
   });
 };
 ///////сброс формы по клику
 const onBtnResetAddFormListener = () => {
-  buttonResetAdForm.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    adForm.reset();
-    setPositionMainPin();
-    resetImageSrc();
-    resetBackgroundPreview();
+  buttonResetAdForm.addEventListener('click', () => {
+    onResetForm();
   });
 };
 
-export { makeFormsDisabled, makeAddFormsActive, makeMapFormsActive, setInputMinPrice, syncCheckTime, syncSelects, showErrorPopupMessage, showSuccessPopupMessage, submitForm, onBtnResetAddFormListener, roomsSelectListener }
+export { makeFormsDisabled, makeAddFormsActive, makeMapFormsActive, setInputMinPrice, syncCheckTime, syncSelects, showErrorPopupMessage, showSuccessPopupMessage, submitForm, onBtnResetAddFormListener, roomsSelectListener, onResetForm }

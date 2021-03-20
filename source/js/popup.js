@@ -1,4 +1,4 @@
-import { checkHouseType } from './util.js'
+import { checkHouseType } from './util.js';
 // html шаблон который будем копировать
 const similarCardTemplate = document.querySelector('#card').content.querySelector('.popup');
 // функция вставки доступных удобств
@@ -9,7 +9,7 @@ const renderFeaturesElemnts = (arrayItem, item) => {
   }
   arrayItem.offer.features.forEach((featureItem) => {
     const featureItemTemplate = `<li class="popup__feature popup__feature--${featureItem}"></li>`;
-    popupFeatures.insertAdjacentHTML('beforeend', featureItemTemplate)
+    popupFeatures.insertAdjacentHTML('beforeend', featureItemTemplate);
   });
 };
 // функция вставки изображений объявления
@@ -39,29 +39,13 @@ const fillPopupElement = (arrayItem, newElement) => {
   return newElement;
 };
 
-// функция генерации элементов
-const createPopupElements = (array) => {
-  // создаю массив в который положу сгенерированные элементы готовых объявлений
-  const popupElementsList = [];
-  // теперь для каждого объекта данных из массива сгенерируем элементы
-  array.forEach((arrayItem) => {
-    // копируем шаблон со всем его содержимым true в новую переменную
-    const popupElement = similarCardTemplate.cloneNode(true);
-    fillPopupElement(arrayItem, popupElement);
-    renderFeaturesElemnts(arrayItem, popupElement);
-    renderPhotosElemnts(arrayItem, popupElement);
-    // каждый сгенерированный элемент объявления кладем в массив
-    popupElementsList.push(popupElement);
-  });
-  return popupElementsList;
-};
-
-const createOnePopupELement = (element) => {
+// функция генерации одного элемента
+const createPopupELement = (element) => {
   const popupElement = similarCardTemplate.cloneNode(true);
   fillPopupElement(element, popupElement);
   renderFeaturesElemnts(element, popupElement);
   renderPhotosElemnts(element, popupElement);
   return popupElement;
-}
+};
 
-export { createPopupElements, createOnePopupELement };
+export { createPopupELement };

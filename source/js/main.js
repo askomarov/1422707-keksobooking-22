@@ -11,25 +11,28 @@ const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
 makeFormsDisabled();
 
 const getDataSuccess = (data) => {
-  createPointsOnMap(data)
-  filterMapForm(data)
+  createPointsOnMap(data);
+  filterMapForm(data);
   makeMapFormsActive();
+};
+
+const onSuccessSubmit = () => {
+  showSuccessPopupMessage();
+  getData(getURL, getDataSuccess, showAlert);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
 
   loadMap();
-
   getData(getURL, getDataSuccess, showAlert);
 
   setInputMinPrice();
   syncCheckTime();
   roomsSelectListener();
 
-  submitForm(sendURL, showSuccessPopupMessage, showErrorPopupMessage);
-
+  submitForm(sendURL, onSuccessSubmit, showErrorPopupMessage);
   onBtnResetAddFormListener();
 
   previewAvatar();
-  previewBackground()
+  previewBackground();
 });

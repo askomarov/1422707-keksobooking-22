@@ -3,7 +3,7 @@ const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const avatarFileChooser = document.querySelector('#avatar');
 const avatarPreview = document.querySelector('.ad-form-header__preview > img');
 const offerFileChooser = document.querySelector('#images');
-const offerImgPreview = document.querySelector('.ad-form__photo')
+const offerImgPreview = document.querySelector('.ad-form__photo');
 
 const previewAvatar = () => {
   avatarFileChooser.addEventListener('change', () => {
@@ -54,4 +54,5 @@ const resetImageSrc = () => {
 const resetBackgroundPreview = () => {
   offerImgPreview.style.backgroundImage = '';
 };
-export { previewAvatar, previewBackground, resetImageSrc, resetBackgroundPreview }
+
+export { previewAvatar, previewBackground, resetImageSrc, resetBackgroundPreview };

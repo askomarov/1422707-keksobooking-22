@@ -1,7 +1,7 @@
 /*global L:readonly*/
 import { makeFormsDisabled, makeAddFormsActive } from './form.js';
 import { showAlert } from './util.js';
-import { createOnePopupELement } from './popup.js';
+import { createPopupELement } from './popup.js';
 
 const OFFER_QUANTITY = 10;
 
@@ -86,7 +86,7 @@ const createPointsOnMap = (array) => {
     marker
       .addTo(map)
       .bindPopup(
-        createOnePopupELement(point),
+        createPopupELement(point),
         {
           keepInView: true,
         });
@@ -94,9 +94,15 @@ const createPointsOnMap = (array) => {
   });
 };
 
+const resetMarkers = () => {
+  markers.forEach(marker => {
+    marker.addTo(map);
+  });
+};
+
 const deleteMarker = () => {
   markers.forEach(marker => {
-    marker.remove()
+    marker.remove();
   });
 };
 
@@ -105,4 +111,4 @@ const setPositionMainPin = () => {
   mainPinMarker.setLatLng([35.6817, 139.753882])
 };
 
-export { createPointsOnMap, deleteMarker, loadMap, setPositionMainPin }
+export { createPointsOnMap, deleteMarker, loadMap, setPositionMainPin, resetMarkers }
