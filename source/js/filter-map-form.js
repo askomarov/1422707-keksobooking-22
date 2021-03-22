@@ -48,12 +48,12 @@ const filterByGuests = (item) => {
   return houseGuestsFilter.value === 'any' || item.offer.guests === Number(houseGuestsFilter.value)
 };
 
-const filteredItem = (item) => {
+const getFilteredItem = (item) => {
   return filterByType(item) && filterByPrice(item) && filterByFeatures(item) && filterByRooms(item) && filterByGuests(item);
 };
 
 const renderFilteredArray = (array) => {
-  const filteredItems = array.filter(filteredItem)
+  const filteredItems = array.filter(getFilteredItem)
   deleteMarker();
   createPointsOnMap(filteredItems);
 };

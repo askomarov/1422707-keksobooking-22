@@ -1,16 +1,16 @@
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const filesTypes = ['gif', 'jpg', 'jpeg', 'png'];
 
 const avatarFileChooser = document.querySelector('#avatar');
 const avatarPreview = document.querySelector('.ad-form-header__preview > img');
 const offerFileChooser = document.querySelector('#images');
 const offerImgPreview = document.querySelector('.ad-form__photo');
 
-const previewAvatar = () => {
+const setPreviewUploadAvatar = () => {
   avatarFileChooser.addEventListener('change', () => {
     const file = avatarFileChooser.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => {
+    const matches = filesTypes.some((it) => {
       return fileName.endsWith(it);
     });
 
@@ -26,12 +26,12 @@ const previewAvatar = () => {
   });
 };
 
-const previewBackground = () => {
+const setPreviewUploadImg = () => {
   offerFileChooser.addEventListener('change', () => {
     const file = offerFileChooser.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => {
+    const matches = filesTypes.some((it) => {
       return fileName.endsWith(it);
     });
 
@@ -55,4 +55,4 @@ const resetBackgroundPreview = () => {
   offerImgPreview.style.backgroundImage = '';
 };
 
-export { previewAvatar, previewBackground, resetImageSrc, resetBackgroundPreview };
+export { setPreviewUploadAvatar, setPreviewUploadImg, resetImageSrc, resetBackgroundPreview };

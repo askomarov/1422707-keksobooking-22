@@ -1,9 +1,9 @@
 import { showAlert } from './util.js';
-import { setInputMinPrice, roomsSelectListener, syncCheckTime, makeFormsDisabled, makeMapFormsActive, submitForm, showSuccessPopupMessage, showErrorPopupMessage, onBtnResetAddFormListener } from './form.js';
+import { setInputMinPrice, setRoomsSelectListener, syncCheckTime, makeFormsDisabled, makeMapFormsActive, submitForm, showSuccessPopupMessage, showErrorPopupMessage, onBtnResetAddFormListener } from './form.js';
 import { loadMap, createPointsOnMap } from './map.js';
 import { getData } from './get-send-data.js';
 import { filterMapForm } from './filter-map-form.js';
-import { previewAvatar, previewBackground } from './preview-avatar-background.js';
+import { setPreviewUploadAvatar, setPreviewUploadImg } from './preview-avatar-background.js';
 
 const sendURL = 'https://22.javascript.pages.academy/keksobooking';
 const getURL = 'https://22.javascript.pages.academy/keksobooking/data';
@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setInputMinPrice();
   syncCheckTime();
-  roomsSelectListener();
+  setRoomsSelectListener();
 
   submitForm(sendURL, onSuccessSubmit, showErrorPopupMessage);
   onBtnResetAddFormListener();
 
-  previewAvatar();
-  previewBackground();
+  setPreviewUploadAvatar();
+  setPreviewUploadImg();
 });

@@ -91,10 +91,10 @@ const syncCheckTime = () => {
 const syncSelects = (mainSelect, selectToSync) => {
   const options = selectToSync.options;
 
-  if (mainSelect.value == 1) {
+  if (mainSelect.value === '1') {
     for (let index = 0; index < options.length; index++) {
       const option = options[index];
-      if (option.value != 1) {
+      if (option.value !== '1') {
         option.selected = false;
         option.setAttribute('disabled', 'disabled');
       } else {
@@ -104,10 +104,10 @@ const syncSelects = (mainSelect, selectToSync) => {
     }
   }
 
-  if (mainSelect.value == 2) {
+  if (mainSelect.value === '2') {
     for (let index = 0; index < options.length; index++) {
       const option = options[index];
-      if (option.value == 1 || option.value == 2) {
+      if (option.value === '1' || option.value === '2') {
         option.selected = true;
         option.removeAttribute('disabled', 'disabled');
       } else {
@@ -117,10 +117,10 @@ const syncSelects = (mainSelect, selectToSync) => {
     }
   }
 
-  if (mainSelect.value == 3) {
+  if (mainSelect.value === '3') {
     for (let index = 0; index < options.length; index++) {
       const option = options[index];
-      if (option.value == 0) {
+      if (option.value === '0') {
         option.selected = false;
         option.setAttribute('disabled', 'disabled');
       } else {
@@ -130,10 +130,10 @@ const syncSelects = (mainSelect, selectToSync) => {
     }
   }
 
-  if (mainSelect.value == 100) {
+  if (mainSelect.value === '100') {
     for (let index = 0; index < options.length; index++) {
       const option = options[index];
-      if (option.value == 0) {
+      if (option.value === '0') {
         option.selected = true;
         option.removeAttribute('disabled', 'disabled');
       } else {
@@ -143,7 +143,7 @@ const syncSelects = (mainSelect, selectToSync) => {
     }
   }
 };
-const roomsSelectListener = () => {
+const setRoomsSelectListener = () => {
   roomsSelect.addEventListener('change', () => {
     syncSelects(roomsSelect, capacitySelect);
   });
@@ -228,4 +228,4 @@ const onBtnResetAddFormListener = () => {
   });
 };
 
-export { makeFormsDisabled, makeAddFormsActive, makeMapFormsActive, setInputMinPrice, syncCheckTime, syncSelects, showErrorPopupMessage, showSuccessPopupMessage, submitForm, onBtnResetAddFormListener, roomsSelectListener, onResetForm }
+export { makeFormsDisabled, makeAddFormsActive, makeMapFormsActive, setInputMinPrice, syncCheckTime, syncSelects, showErrorPopupMessage, showSuccessPopupMessage, submitForm, onBtnResetAddFormListener, setRoomsSelectListener, onResetForm }

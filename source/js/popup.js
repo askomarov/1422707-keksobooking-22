@@ -30,7 +30,8 @@ const fillPopupElement = (arrayItem, newElement) => {
   newElement.querySelector('.popup__features').innerHTML = '';
   newElement.querySelector('.popup__title').textContent = arrayItem.offer.title;
   newElement.querySelector('.popup__text--address').textContent = arrayItem.offer.address;
-  newElement.querySelector('.popup__text--price').innerHTML = arrayItem.offer.price + ' <span>₽/ночь</span>';
+  // newElement.querySelector('.popup__text--price').innerHTML = arrayItem.offer.price + ' <span>₽/ночь</span>';
+  newElement.querySelector('.popup__text--price').firstChild.textContent = arrayItem.offer.price + ' ';
   newElement.querySelector('.popup__type').textContent = checkHouseType(arrayItem);
   newElement.querySelector('.popup__text--capacity').textContent = `${arrayItem.offer.rooms} команты для ${arrayItem.offer.guests} гостей`;
   newElement.querySelector('.popup__text--time').textContent = `Заезд после ${arrayItem.offer.checkin}, выезд до ${arrayItem.offer.checkout}`;
