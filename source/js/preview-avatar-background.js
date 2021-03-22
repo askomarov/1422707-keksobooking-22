@@ -1,4 +1,4 @@
-const filesTypes = ['gif', 'jpg', 'jpeg', 'png'];
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 const avatarFileChooser = document.querySelector('#avatar');
 const avatarPreview = document.querySelector('.ad-form-header__preview > img');
@@ -10,7 +10,7 @@ const setPreviewUploadAvatar = () => {
     const file = avatarFileChooser.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = filesTypes.some((it) => {
+    const matches = FILE_TYPES.some((it) => {
       return fileName.endsWith(it);
     });
 
@@ -31,7 +31,7 @@ const setPreviewUploadImg = () => {
     const file = offerFileChooser.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = filesTypes.some((it) => {
+    const matches = FILE_TYPES.some((it) => {
       return fileName.endsWith(it);
     });
 
